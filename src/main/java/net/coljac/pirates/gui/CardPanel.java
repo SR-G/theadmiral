@@ -56,6 +56,38 @@ public class CardPanel extends JPanel {
         tempPanel.add(picture, BorderLayout.EAST);
     }
 
+    private String buildCardFileName(final String number) {
+        final String result;
+        final String extension = ".png";
+
+        if (number.toUpperCase().endsWith("A")) {
+            return number.toUpperCase().replaceAll("A", "-1") + extension;
+        }
+
+        if (number.toUpperCase().endsWith("B")) {
+            return number.toUpperCase().replaceAll("B", "-2") + extension;
+        }
+
+        if (number.toUpperCase().endsWith("_1")) {
+            return number.toUpperCase().replaceAll("_1", "-1") + extension;
+        }
+
+        if (number.toUpperCase().endsWith("_2")) {
+            return number.toUpperCase().replaceAll("_2", "-2") + extension;
+        }
+
+        return number + extension;
+    }
+
+    //
+    // public List<Card> getCards() {
+    // return cards;
+    // }
+    //
+    // public List<Card> getAllCards() {
+    // return allCards;
+    // }
+
     /**
      * Gets the card at row.
      * 
@@ -67,15 +99,6 @@ public class CardPanel extends JPanel {
         // return cards.get(row);
         return null;
     }
-
-    //
-    // public List<Card> getCards() {
-    // return cards;
-    // }
-    //
-    // public List<Card> getAllCards() {
-    // return allCards;
-    // }
 
     /**
      * Re filter.
@@ -105,7 +128,7 @@ public class CardPanel extends JPanel {
      */
     public void updatePicture(final Card card) {
         final String imagesPath = "img" + File.separator + "expansions" + File.separator;
-        final String expectedFileCardName = imagesPath + card.getSetAbbreviation(card.getExpansion()) + File.separator + card.getNumber() + "-1.png";
+        final String expectedFileCardName = imagesPath + card.getSetAbbreviation(card.getExpansion()) + File.separator + buildCardFileName(card.getNumber());
         if (new File(expectedFileCardName).exists()) {
             final ImageIcon newImage = new ImageIcon(expectedFileCardName, card.getName());
             final int currentHeight = newImage.getIconHeight();
@@ -122,7 +145,6 @@ public class CardPanel extends JPanel {
             picture.setIcon(blankImage);
             picture.repaint();
         }
-
     }
 
 }
