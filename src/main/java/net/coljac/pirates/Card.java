@@ -8,6 +8,9 @@ import java.io.Serializable;
  */
 public abstract class Card implements Serializable {
 
+    /** serialVersionUID */
+    private static final long serialVersionUID = -129091530337204996L;
+
     /**
      * Builds the.
      * 

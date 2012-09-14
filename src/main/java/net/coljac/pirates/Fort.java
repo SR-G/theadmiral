@@ -6,8 +6,18 @@ package net.coljac.pirates;
  */
 public class Fort extends Ship {
 
+    /** serialVersionUID */
+    private static final long serialVersionUID = 2873115845625827943L;
+
     /** The gold cost. */
     private int goldCost;
+
+    /**
+     * Instantiates a new fort.
+     */
+    public Fort() {
+        cardType = "Fort";
+    }
 
     /**
      * Gets the gold cost.
@@ -24,14 +34,7 @@ public class Fort extends Ship {
      * @param goldCost
      *            the new gold cost
      */
-    public void setGoldCost(int goldCost) {
+    public void setGoldCost(final int goldCost) {
         this.goldCost = goldCost;
-    }
-
-    /**
-     * Instantiates a new fort.
-     */
-    public Fort() {
-        this.cardType = "Fort";
     }
 }

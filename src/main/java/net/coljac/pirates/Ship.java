@@ -6,6 +6,9 @@ package net.coljac.pirates;
  */
 public class Ship extends Card {
 
+    /** serialVersionUID */
+    private static final long serialVersionUID = 3467331773657192539L;
+
     /** The masts. */
     private int masts;
 
@@ -26,87 +29,34 @@ public class Ship extends Card {
 
     /**
      * Instantiates a new ship.
-     * 
-     * @param name
-     *            the name
      */
-    public Ship(String name) {
-        this.name = name;
+    public Ship() {
+        cardType = "Ship";
     }
 
     /**
      * Instantiates a new ship.
+     * 
+     * @param name
+     *            the name
      */
-    public Ship() {
-        this.cardType = "Ship";
+    public Ship(final String name) {
+        this.name = name;
     }
 
     /**
-     * Gets the masts.
+     * {@inheritDoc}
      * 
-     * @return the masts
+     * @see net.coljac.pirates.Card#buildFromString(java.lang.String)
      */
-    public int getMasts() {
-        return masts;
-    }
-
-    /**
-     * Sets the masts.
-     * 
-     * @param masts
-     *            the new masts
-     */
-    public void setMasts(int masts) {
-        this.masts = masts;
-    }
-
-    /**
-     * Gets the cargo.
-     * 
-     * @return the cargo
-     */
-    public int getCargo() {
-        return cargo;
-    }
-
-    /**
-     * Sets the cargo.
-     * 
-     * @param cargo
-     *            the new cargo
-     */
-    public void setCargo(int cargo) {
-        this.cargo = cargo;
-    }
-
-    /**
-     * Gets the move.
-     * 
-     * @return the move
-     */
-    public String getMove() {
-        return move;
-    }
-
-    /**
-     * Sets the move.
-     * 
-     * @param move
-     *            the new move
-     */
-    public void setMove(String move) {
-        this.move = move;
-        if (move.length() > 0) {
-            String[] segments = move.split(" *, *");
-            Distance[] ds = new Distance[segments.length];
-            for (int i = 0; i < segments.length; i++) {
-                String segment = segments[i];
-                ds[i] = Distance.valueOf(segment);
-            }
-            this.moves = ds;
-        } else {
-            this.moves = new Distance[0];
-        }
+    @Override
+    public void buildFromString(final String fromString) {
+        super.buildFromString(fromString);
+        final String[] tokens = fromString.split("\t");
+        masts = Integer.parseInt(tokens[12]);
+        cargo = Integer.parseInt(tokens[13]);
+        setMove(tokens[14]);
+        setCannons(tokens[15]);
     }
 
     /**
@@ -119,34 +69,12 @@ public class Ship extends Card {
     }
 
     /**
-     * Sets the cannons.
+     * Gets the cargo.
      * 
-     * @param cannons
-     *            the new cannons
+     * @return the cargo
      */
-    public void setCannons(String cannons) {
-        this.cannons = cannons;
-        String[] guns = cannons.split(" *, *");
-        Cannon[] cns = new Cannon[guns.length];
-        for (int i = 0; i < guns.length; i++) {
-            String gun = guns[i];
-            cns[i] = new Cannon(gun);
-        }
-        this.guns = cns;
-    }
-
-    /**
-     * Gets the move distance.
-     * 
-     * @return the move distance
-     */
-    public int getMoveDistance() {
-        int d = 0;
-        for (int i = 0; i < getMoves().length; i++) {
-            Distance distance = getMoves()[i];
-            d += distance.getMillis();
-        }
-        return d;
+    public int getCargo() {
+        return cargo;
     }
 
     /**
@@ -159,13 +87,35 @@ public class Ship extends Card {
     }
 
     /**
-     * Sets the guns.
+     * Gets the masts.
      * 
-     * @param guns
-     *            the new guns
+     * @return the masts
      */
-    public void setGuns(Cannon[] guns) {
-        this.guns = guns;
+    public int getMasts() {
+        return masts;
+    }
+
+    /**
+     * Gets the move.
+     * 
+     * @return the move
+     */
+    public String getMove() {
+        return move;
+    }
+
+    /**
+     * Gets the move distance.
+     * 
+     * @return the move distance
+     */
+    public int getMoveDistance() {
+        int d = 0;
+        for (int i = 0; i < getMoves().length; i++) {
+            final Distance distance = getMoves()[i];
+            d += distance.getMillis();
+        }
+        return d;
     }
 
     /**
@@ -174,10 +124,78 @@ public class Ship extends Card {
      * @return the moves
      */
     public Distance[] getMoves() {
-        if (moves == null && move != null) {
+        if ((moves == null) && (move != null)) {
             setMove(getMove());
         }
         return moves;
+    }
+
+    /**
+     * Sets the cannons.
+     * 
+     * @param cannons
+     *            the new cannons
+     */
+    public void setCannons(final String cannons) {
+        this.cannons = cannons;
+        final String[] guns = cannons.split(" *, *");
+        final Cannon[] cns = new Cannon[guns.length];
+        for (int i = 0; i < guns.length; i++) {
+            final String gun = guns[i];
+            cns[i] = new Cannon(gun);
+        }
+        this.guns = cns;
+    }
+
+    /**
+     * Sets the cargo.
+     * 
+     * @param cargo
+     *            the new cargo
+     */
+    public void setCargo(final int cargo) {
+        this.cargo = cargo;
+    }
+
+    /**
+     * Sets the guns.
+     * 
+     * @param guns
+     *            the new guns
+     */
+    public void setGuns(final Cannon[] guns) {
+        this.guns = guns;
+    }
+
+    /**
+     * Sets the masts.
+     * 
+     * @param masts
+     *            the new masts
+     */
+    public void setMasts(final int masts) {
+        this.masts = masts;
+    }
+
+    /**
+     * Sets the move.
+     * 
+     * @param move
+     *            the new move
+     */
+    public void setMove(final String move) {
+        this.move = move;
+        if (move.length() > 0) {
+            final String[] segments = move.split(" *, *");
+            final Distance[] ds = new Distance[segments.length];
+            for (int i = 0; i < segments.length; i++) {
+                final String segment = segments[i];
+                ds[i] = Distance.valueOf(segment);
+            }
+            moves = ds;
+        } else {
+            moves = new Distance[0];
+        }
     }
 
     /**
@@ -186,18 +204,8 @@ public class Ship extends Card {
      * @param moves
      *            the new moves
      */
-    public void setMoves(Distance[] moves) {
+    public void setMoves(final Distance[] moves) {
         this.moves = moves;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * @see net.coljac.pirates.Card#toString()
-     */
-    public String toString() {
-        return "Ship{" + "id=" + id + ", number='" + number + '\'' + ", name='" + name + '\'' + ", expansion='" + expansion + '\'' + ", points=" + points + ", faction='" + faction + '\'' + ", masts=" + masts + ", cargo=" + cargo + ", move='" + move + '\'' + ", rules='" + rules + '\'' + ", flavor='"
-                + flavor + '\'' + ", cannons='" + cannons + '\'' + ", extra='" + extra + '\'' + ", rarity='" + rarity + '\'' + '}';
     }
 
     // ID Card Name Points Faction Masts Cargo Move Cannons Ability Rarity Set Flavor
@@ -205,24 +213,22 @@ public class Ship extends Card {
     /**
      * {@inheritDoc}
      * 
-     * @see net.coljac.pirates.Card#buildFromString(java.lang.String)
+     * @see net.coljac.pirates.Card#toCSV()
      */
-    public void buildFromString(String fromString) {
-        super.buildFromString(fromString);
-        String[] tokens = fromString.split("\t");
-        this.masts = Integer.parseInt(tokens[12]);
-        this.cargo = Integer.parseInt(tokens[13]);
-        this.setMove(tokens[14]);
-        this.setCannons(tokens[15]);
+    @Override
+    public String toCSV() {
+        return super.toCSV() + "\t" + masts + "\t" + cargo + "\t" + move + "\t" + cannons + "\t";
     }
 
     /**
      * {@inheritDoc}
      * 
-     * @see net.coljac.pirates.Card#toCSV()
+     * @see net.coljac.pirates.Card#toString()
      */
-    public String toCSV() {
-        return super.toCSV() + "\t" + masts + "\t" + cargo + "\t" + move + "\t" + cannons + "\t";
+    @Override
+    public String toString() {
+        return "Ship{" + "id=" + id + ", number='" + number + '\'' + ", name='" + name + '\'' + ", expansion='" + expansion + '\'' + ", points=" + points + ", faction='" + faction + '\'' + ", masts=" + masts + ", cargo=" + cargo + ", move='" + move + '\'' + ", rules='" + rules + '\'' + ", flavor='"
+                + flavor + '\'' + ", cannons='" + cannons + '\'' + ", extra='" + extra + '\'' + ", rarity='" + rarity + '\'' + '}';
     }
 
 }

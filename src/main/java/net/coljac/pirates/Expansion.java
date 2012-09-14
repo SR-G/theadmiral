@@ -1,9 +1,14 @@
 package net.coljac.pirates;
 
+import java.io.Serializable;
+
 /**
  * The Class Expansion.
  */
-public class Expansion {
+public class Expansion implements Serializable {
+
+    /** serialVersionUID */
+    private static final long serialVersionUID = 1L;
 
     /** The name. */
     private String name;

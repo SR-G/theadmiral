@@ -6,6 +6,9 @@ package net.coljac.pirates;
  */
 public class Crew extends Card {
 
+    /** serialVersionUID */
+    private static final long serialVersionUID = -2932592643650722217L;
+
     /** The rank. */
     private String rank;
 

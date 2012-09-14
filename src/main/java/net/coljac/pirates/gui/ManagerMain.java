@@ -11,6 +11,7 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
@@ -27,6 +28,7 @@ import javax.swing.filechooser.FileFilter;
 
 import net.coljac.pirates.CardDatabase;
 import net.coljac.pirates.gui.helper.Exporter;
+import net.coljac.pirates.gui.helper.ImageHelper;
 import net.coljac.pirates.gui.helper.Importer;
 
 /**
@@ -35,12 +37,18 @@ import net.coljac.pirates.gui.helper.Importer;
  */
 public class ManagerMain extends JFrame {
 
+    /** serialVersionUID */
+    private static final long serialVersionUID = 1L;
+
     /** The Constant VERSION. */
     public static final String VERSION = "1.4.0 (SRG)"; // December 29
 
     /** The instance. */
     public static ManagerMain instance;
 
+    /**
+     * Creates the instance.
+     */
     public static synchronized void createInstance() {
         instance = new ManagerMain();
     }
@@ -126,10 +134,7 @@ public class ManagerMain extends JFrame {
                 db = new CardDatabase(cardDB);
             }
         }
-        // for(Card card:db.getCards()) {
-        // card.setOwned(0);
-        // card.setWanted(0);
-        // }
+        checkImagesAvailabily();
         init();
         setIconImage(Icons.ICON_ADMIRAL_32.getImage());
 
@@ -149,6 +154,22 @@ public class ManagerMain extends JFrame {
 
         setVisible(true);
         aboutPanel = new AboutPanel();
+    }
+
+    /**
+     * Check images availabily.
+     * 
+     * @param db2
+     *            the db2
+     */
+    private void checkImagesAvailabily() {
+        final Collection<String> notAvailablesImages = ImageHelper.checkImageAvaibility(db);
+        if (notAvailablesImages.size() > 0) {
+            System.out.println("Warning, " + notAvailablesImages.size() + " images aren't available");
+            for (final String notAvailableImage : notAvailablesImages) {
+                System.out.println(" - " + notAvailableImage);
+            }
+        }
     }
 
     /**
@@ -490,7 +511,6 @@ public class ManagerMain extends JFrame {
             public void actionPerformed(final ActionEvent e) {
                 final JDialog dialog = new JDialog(instance, "Admiral Help", false);
                 dialog.add(new HelpPanel("/help/help.html"));
-                // dialog.setLocation((int) instance.getLocation().getX() + 200, (int) instance.getLocation().getY() + 100);
                 dialog.setSize(700, 500);
                 dialog.setLocationRelativeTo(ManagerMain.instance);
                 dialog.setVisible(true);
@@ -503,7 +523,6 @@ public class ManagerMain extends JFrame {
             public void actionPerformed(final ActionEvent e) {
                 final JDialog dialog = new JDialog(instance, "Admiral Versions", false);
                 dialog.add(new HelpPanel("/help/versions.html"));
-                // dialog.setLocation((int) instance.getLocation().getX() + 200, (int) instance.getLocation().getY() + 100);
                 dialog.setSize(700, 500);
                 dialog.setLocationRelativeTo(ManagerMain.instance);
                 dialog.setVisible(true);
@@ -518,7 +537,7 @@ public class ManagerMain extends JFrame {
                 final JDialog aboutDialog = new JDialog(ManagerMain.instance, "About", false);
                 aboutDialog.add(aboutPanel);
                 aboutDialog.pack();
-                aboutDialog.setLocation((int) (ManagerMain.instance.getLocation().getX() + 100), (int) (ManagerMain.instance.getLocation().getY()) + 100);
+                aboutDialog.setLocationRelativeTo(ManagerMain.instance);
                 aboutDialog.setVisible(true);
             }
         });
@@ -526,7 +545,6 @@ public class ManagerMain extends JFrame {
         helpMenu.add(versions);
         helpMenu.addSeparator();
         helpMenu.add(about);
-
     }
 
     /**

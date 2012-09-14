@@ -6,11 +6,14 @@ package net.coljac.pirates;
  */
 public class Event extends Card {
 
+    /** serialVersionUID */
+    private static final long serialVersionUID = 5641272737897066557L;
+
     /**
      * Instantiates a new event.
      */
     public Event() {
-        this.cardType = "Event";
+        cardType = "Event";
     }
 
 }

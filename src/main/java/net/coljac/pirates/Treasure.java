@@ -6,11 +6,14 @@ package net.coljac.pirates;
  */
 public class Treasure extends Card {
 
+    /** serialVersionUID */
+    private static final long serialVersionUID = -5092533173806646256L;
+
     /**
      * Instantiates a new treasure.
      */
     public Treasure() {
-        this.cardType = "Treasure";
+        cardType = "Treasure";
     }
 
 }

@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.coljac.pirates.Card;
-import net.coljac.pirates.Constants;
+import net.coljac.pirates.gui.helper.ImageHelper;
 
 /**
  * By Colin Jacobs, colin@q9software.com
@@ -79,35 +79,6 @@ public class CardPanel extends JPanel {
     }
 
     /**
-     * Gets the expected image file name.
-     * 
-     * @return the expected image file name
-     */
-    public String getExpectedImageFileName(final String number) {
-        if (number.endsWith("-1") || number.endsWith("-2")) {
-            return number + Constants.DEFAULT_IMAGE_EXTENSION;
-        }
-
-        if (number.toUpperCase().endsWith("A")) {
-            return number.toUpperCase().replaceAll("A", "-1") + Constants.DEFAULT_IMAGE_EXTENSION;
-        }
-
-        if (number.toUpperCase().endsWith("B")) {
-            return number.toUpperCase().replaceAll("B", "-2") + Constants.DEFAULT_IMAGE_EXTENSION;
-        }
-
-        if (number.endsWith("_1")) {
-            return number.replaceAll("_1", "-1") + Constants.DEFAULT_IMAGE_EXTENSION;
-        }
-
-        if (number.endsWith("_2")) {
-            return number.replaceAll("_2", "-2") + Constants.DEFAULT_IMAGE_EXTENSION;
-        }
-
-        return number + "-1" + Constants.DEFAULT_IMAGE_EXTENSION;
-    }
-
-    /**
      * Re filter.
      */
     public void reFilter() {
@@ -134,7 +105,7 @@ public class CardPanel extends JPanel {
      *            the card
      */
     public void updatePicture(final Card card) {
-        final String expectedFileCardName = Constants.DEFAULT_IMAGE_PATH + card.getSetAbbreviation(card.getExpansion()) + File.separator + getExpectedImageFileName(card.getNumber());
+        final String expectedFileCardName = ImageHelper.getExpectedImageFulPath(card);
         if (new File(expectedFileCardName).exists()) {
             final ImageIcon newImage = new ImageIcon(expectedFileCardName, card.getName());
             final int currentHeight = newImage.getIconHeight();
@@ -146,7 +117,7 @@ public class CardPanel extends JPanel {
             picture.setToolTipText(expectedFileCardName);
             picture.repaint();
         } else {
-            System.err.println("Image not found [" + expectedFileCardName + "]");
+            // System.err.println("Image not found [" + expectedFileCardName + "]");
             picture.setToolTipText(expectedFileCardName);
             picture.setIcon(blankImage);
             picture.repaint();

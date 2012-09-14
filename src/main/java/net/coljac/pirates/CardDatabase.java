@@ -126,15 +126,23 @@ public class CardDatabase implements Serializable {
         treasure.clear();
     }
 
+    /**
+     * Clear owned cards.
+     */
     public void clearOwnedCards() {
         clearOwnedCards(cards);
         clearOwnedCards(ships);
         clearOwnedCards(crew);
         clearOwnedCards(events);
         clearOwnedCards(treasure);
-
     }
 
+    /**
+     * Clear owned cards.
+     * 
+     * @param cardsToClear
+     *            the cards to clear
+     */
     private void clearOwnedCards(final List<? extends Card> cardsToClear) {
         for (final Card card : cardsToClear) {
             card.setOwned(0);

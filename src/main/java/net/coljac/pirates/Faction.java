@@ -1,9 +1,14 @@
 package net.coljac.pirates;
 
+import java.io.Serializable;
+
 /**
  * The Class Faction.
  */
-public class Faction {
+public class Faction implements Serializable {
+
+    /** serialVersionUID */
+    private static final long serialVersionUID = 1L;
 
     /** The label. */
     private String label;

@@ -12,6 +12,9 @@ import java.util.Map;
  */
 public class Fleet implements Serializable {
 
+    /** serialVersionUID */
+    private static final long serialVersionUID = 1L;
+
     /** The id. */
     private long id;
 
@@ -47,27 +50,12 @@ public class Fleet implements Serializable {
     }
 
     /**
-     * Adds the ship.
-     * 
-     * @param s
-     *            the s
-     */
-    public void addShip(Ship s) {
-        if (!ships.contains(s)) {
-            ships.add(s);
-            ShipsCrew list = new ShipsCrew(s);
-            shipCrew.put(s, list);
-            points += s.getPoints();
-        }
-    }
-
-    /**
      * Adds the crew.
      * 
      * @param c
      *            the c
      */
-    public void addCrew(Crew c) {
+    public void addCrew(final Crew c) {
         if (crew.contains(c) && !c.isGeneric()) {
             return;
         }
@@ -83,72 +71,13 @@ public class Fleet implements Serializable {
      * @param c
      *            the c
      */
-    public void addCrewToShip(Ship s, Crew c) {
-        if (!ships.contains(s))
+    public void addCrewToShip(final Ship s, final Crew c) {
+        if (!ships.contains(s)) {
             return;
-        ShipsCrew list = shipCrew.get(s);
+        }
+        final ShipsCrew list = shipCrew.get(s);
         list.add(c);
         points += c.getPoints();
-    }
-
-    /**
-     * Removes the ship.
-     * 
-     * @param s
-     *            the s
-     */
-    public void removeShip(Ship s) {
-        if (!ships.contains(s))
-            return;
-        ShipsCrew list = shipCrew.get(s);
-        if (list != null) {
-            for (Crew c : list.getCrewList()) {
-                points -= c.getPoints();
-            }
-        }
-        shipCrew.remove(s);
-        ships.remove(s);
-        points -= s.getPoints();
-    }
-
-    /**
-     * Removes the crew.
-     * 
-     * @param c
-     *            the c
-     */
-    public void removeCrew(Crew c) {
-        points -= c.getPoints();
-        crew.remove(c);
-    }
-
-    /**
-     * Refresh.
-     */
-    public void refresh() {
-        for (ShipsCrew crew : shipCrew.values()) {
-            crew.calculatePoints();
-        }
-    }
-
-    /**
-     * Removes the crew from ship.
-     * 
-     * @param c
-     *            the c
-     * @param s
-     *            the s
-     */
-    public void removeCrewFromShip(Crew c, Ship s) {
-        if (!ships.contains(s))
-            return;
-        ShipsCrew list = shipCrew.get(s);
-        if (list != null) {
-            if (list.getCrewList().contains(c)) {
-                list.remove(c);
-                points -= c.getPoints();
-            }
-        }
     }
 
     /**
@@ -157,41 +86,24 @@ public class Fleet implements Serializable {
      * @param e
      *            the e
      */
-    public void addExtraCard(Card e) {
+    public void addExtraCard(final Card e) {
         extraCards.add(e);
-        this.points += e.getPoints();
+        points += e.getPoints();
     }
 
     /**
-     * Removes the extra card.
+     * Adds the ship.
      * 
-     * @param e
-     *            the e
+     * @param s
+     *            the s
      */
-    public void removeExtraCard(Card e) {
-        if (extraCards.contains(e)) {
-            extraCards.remove(e);
-            points -= e.getPoints();
+    public void addShip(final Ship s) {
+        if (!ships.contains(s)) {
+            ships.add(s);
+            final ShipsCrew list = new ShipsCrew(s);
+            shipCrew.put(s, list);
+            points += s.getPoints();
         }
-    }
-
-    /**
-     * Gets the ships.
-     * 
-     * @return the ships
-     */
-    public List<Ship> getShips() {
-        return ships;
-    }
-
-    /**
-     * Sets the ships.
-     * 
-     * @param ships
-     *            the new ships
-     */
-    public void setShips(List<Ship> ships) {
-        this.ships = ships;
     }
 
     /**
@@ -204,13 +116,12 @@ public class Fleet implements Serializable {
     }
 
     /**
-     * Sets the crew.
+     * Gets the description.
      * 
-     * @param crew
-     *            the new crew
+     * @return the description
      */
-    public void setCrew(List<Crew> crew) {
-        this.crew = crew;
+    public String getDescription() {
+        return description;
     }
 
     /**
@@ -223,108 +134,12 @@ public class Fleet implements Serializable {
     }
 
     /**
-     * Sets the extra cards.
-     * 
-     * @param extraCards
-     *            the new extra cards
-     */
-    public void setExtraCards(List<Card> extraCards) {
-        this.extraCards = extraCards;
-    }
-
-    /**
-     * Gets the points.
-     * 
-     * @return the points
-     */
-    public int getPoints() {
-        return points;
-    }
-
-    /**
-     * Sets the points.
-     * 
-     * @param points
-     *            the new points
-     */
-    public void setPoints(int points) {
-        this.points = points;
-    }
-
-    /**
-     * Gets the description.
-     * 
-     * @return the description
-     */
-    public String getDescription() {
-        return description;
-    }
-
-    /**
-     * Sets the description.
-     * 
-     * @param description
-     *            the new description
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    /**
-     * Gets the name.
-     * 
-     * @return the name
-     */
-    public String getName() {
-        return name;
-    }
-
-    /**
-     * Sets the name.
-     * 
-     * @param name
-     *            the new name
-     */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
      * Gets the faction.
      * 
      * @return the faction
      */
     public String getFaction() {
         return faction;
-    }
-
-    /**
-     * Sets the faction.
-     * 
-     * @param faction
-     *            the new faction
-     */
-    public void setFaction(String faction) {
-        this.faction = faction;
-    }
-
-    /**
-     * Gets the ship crew.
-     * 
-     * @return the ship crew
-     */
-    public Map<Ship, ShipsCrew> getShipCrew() {
-        return shipCrew;
-    }
-
-    /**
-     * Sets the ship crew.
-     * 
-     * @param shipCrew
-     *            the ship crew
-     */
-    public void setShipCrew(Map<Ship, ShipsCrew> shipCrew) {
-        this.shipCrew = shipCrew;
     }
 
     /**
@@ -337,13 +152,204 @@ public class Fleet implements Serializable {
     }
 
     /**
+     * Gets the name.
+     * 
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the points.
+     * 
+     * @return the points
+     */
+    public int getPoints() {
+        return points;
+    }
+
+    /**
+     * Gets the ship crew.
+     * 
+     * @return the ship crew
+     */
+    public Map<Ship, ShipsCrew> getShipCrew() {
+        return shipCrew;
+    }
+
+    /**
+     * Gets the ships.
+     * 
+     * @return the ships
+     */
+    public List<Ship> getShips() {
+        return ships;
+    }
+
+    /**
+     * Refresh.
+     */
+    public void refresh() {
+        for (final ShipsCrew crew : shipCrew.values()) {
+            crew.calculatePoints();
+        }
+    }
+
+    /**
+     * Removes the crew.
+     * 
+     * @param c
+     *            the c
+     */
+    public void removeCrew(final Crew c) {
+        points -= c.getPoints();
+        crew.remove(c);
+    }
+
+    /**
+     * Removes the crew from ship.
+     * 
+     * @param c
+     *            the c
+     * @param s
+     *            the s
+     */
+    public void removeCrewFromShip(final Crew c, final Ship s) {
+        if (!ships.contains(s)) {
+            return;
+        }
+        final ShipsCrew list = shipCrew.get(s);
+        if (list != null) {
+            if (list.getCrewList().contains(c)) {
+                list.remove(c);
+                points -= c.getPoints();
+            }
+        }
+    }
+
+    /**
+     * Removes the extra card.
+     * 
+     * @param e
+     *            the e
+     */
+    public void removeExtraCard(final Card e) {
+        if (extraCards.contains(e)) {
+            extraCards.remove(e);
+            points -= e.getPoints();
+        }
+    }
+
+    /**
+     * Removes the ship.
+     * 
+     * @param s
+     *            the s
+     */
+    public void removeShip(final Ship s) {
+        if (!ships.contains(s)) {
+            return;
+        }
+        final ShipsCrew list = shipCrew.get(s);
+        if (list != null) {
+            for (final Crew c : list.getCrewList()) {
+                points -= c.getPoints();
+            }
+        }
+        shipCrew.remove(s);
+        ships.remove(s);
+        points -= s.getPoints();
+    }
+
+    /**
+     * Sets the crew.
+     * 
+     * @param crew
+     *            the new crew
+     */
+    public void setCrew(final List<Crew> crew) {
+        this.crew = crew;
+    }
+
+    /**
+     * Sets the description.
+     * 
+     * @param description
+     *            the new description
+     */
+    public void setDescription(final String description) {
+        this.description = description;
+    }
+
+    /**
+     * Sets the extra cards.
+     * 
+     * @param extraCards
+     *            the new extra cards
+     */
+    public void setExtraCards(final List<Card> extraCards) {
+        this.extraCards = extraCards;
+    }
+
+    /**
+     * Sets the faction.
+     * 
+     * @param faction
+     *            the new faction
+     */
+    public void setFaction(final String faction) {
+        this.faction = faction;
+    }
+
+    /**
      * Sets the id.
      * 
      * @param id
      *            the new id
      */
-    public void setId(long id) {
+    public void setId(final long id) {
         this.id = id;
+    }
+
+    /**
+     * Sets the name.
+     * 
+     * @param name
+     *            the new name
+     */
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets the points.
+     * 
+     * @param points
+     *            the new points
+     */
+    public void setPoints(final int points) {
+        this.points = points;
+    }
+
+    /**
+     * Sets the ship crew.
+     * 
+     * @param shipCrew
+     *            the ship crew
+     */
+    public void setShipCrew(final Map<Ship, ShipsCrew> shipCrew) {
+        this.shipCrew = shipCrew;
+    }
+
+    /**
+     * Sets the ships.
+     * 
+     * @param ships
+     *            the new ships
+     */
+    public void setShips(final List<Ship> ships) {
+        this.ships = ships;
     }
 
 }

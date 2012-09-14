@@ -149,5 +149,4 @@ public class StatisticsPanel extends JPanel {
 
         return buildData(counts, max);
     }
-
 }
