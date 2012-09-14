@@ -26,4 +26,8 @@ The help file for the application can be read [here](https://github.com/SR-G/the
 # Links
 
 * [Previous repository on SourceForge](http://theadmiral.sourceforge.net/)
+* [Miniture listings](http://www.miniaturetrading.com/im/selectCard/game_id/34/goal/)
+* [POTSM France](potsm-france.com)
+* [Pirates & Corsaires](http://www.pirates-corsaires.com/)
+* [LACW POTSM french presentation](http://lacfw.over-blog.net/article-pirates-of-the-spanish-main-51186703.html)
 * 
