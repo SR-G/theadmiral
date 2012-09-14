@@ -74,7 +74,6 @@ public class StatisticsPanel extends JPanel {
         for (final Entry<String, Number> entry : counts.entrySet()) {
             labels.add(entry.getKey());
             values.add(entry.getValue());
-            System.out.println(entry.getKey() + " = " + entry.getValue());
         }
         Collections.reverse(labels);
 
