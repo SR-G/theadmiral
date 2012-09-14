@@ -55,7 +55,7 @@ public class AboutPanel extends JPanel {
         final JLabel aboutLabel2 = new JLabel("A free fleet management application for all ye");
         final JLabel aboutLabel2a = new JLabel("Pirates of the Spanish Main.");
         aboutLabel2.setFont(new Font(defaultFont.getFontName(), Font.PLAIN, defaultFont.getSize() - 1));
-        final JLabel aboutLabel3 = new JLabel("Version: " + ManagerMain.VERSION);
+        final JLabel aboutLabel3 = new JLabel("Version: " + Constants.VERSION);
         final JLabel aboutLabel4 = new JLabel("Software (C) 2007 Colin Jacobs (coljac@coljac.net)");
         final JLabel aboutLabel4a = new JLabel("Portions (C) 2008 Jonathan Borowski (SuperHomer)");
         final JLabel aboutLabel5 = new JLabel("<html>Pirates of the Spanish Main and all card descriptions <br>are (C) and remain the property of WizKids Inc.</html>");
