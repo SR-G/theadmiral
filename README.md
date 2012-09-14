@@ -6,9 +6,9 @@ The Admiral is a program to manage a database of cards for the game [Pirates of 
 
 # Download
 
-Get it there :
+Get it there : http://potsm.tensin.org/downloads/theadmiral-1.4.0.jar
 
-Images pack available here (uncompress under "img/") : 
+Images pack available here (uncompress under "img/") : http://potsm.tensin.org/downloads/potsm-images.zip (~145 mo, about 1954 images availables, 19 missings)
 
 # Instructions
 
