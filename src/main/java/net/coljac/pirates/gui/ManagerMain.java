@@ -122,6 +122,7 @@ public class ManagerMain extends JFrame {
                     db = new CardDatabase(cardDB);
                 }
             } catch (final Exception e) {
+                e.printStackTrace();
                 db = new CardDatabase(cardDB);
             }
         }

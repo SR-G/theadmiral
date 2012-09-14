@@ -41,6 +41,7 @@ public class CardDatabase implements Serializable {
         try {
             db = (CardDatabase) ois.readObject();
         } catch (final ClassNotFoundException e) {
+            e.printStackTrace();
             return null;
         }
         db.setFileName(fileName);

@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import net.coljac.pirates.Card;
+import net.coljac.pirates.Constants;
 
 /**
  * By Colin Jacobs, colin@q9software.com
@@ -56,29 +57,6 @@ public class CardPanel extends JPanel {
         tempPanel.add(picture, BorderLayout.EAST);
     }
 
-    private String buildCardFileName(final String number) {
-        final String result;
-        final String extension = ".png";
-
-        if (number.toUpperCase().endsWith("A")) {
-            return number.toUpperCase().replaceAll("A", "-1") + extension;
-        }
-
-        if (number.toUpperCase().endsWith("B")) {
-            return number.toUpperCase().replaceAll("B", "-2") + extension;
-        }
-
-        if (number.toUpperCase().endsWith("_1")) {
-            return number.toUpperCase().replaceAll("_1", "-1") + extension;
-        }
-
-        if (number.toUpperCase().endsWith("_2")) {
-            return number.toUpperCase().replaceAll("_2", "-2") + extension;
-        }
-
-        return number + "-1" + extension;
-    }
-
     //
     // public List<Card> getCards() {
     // return cards;
@@ -98,6 +76,35 @@ public class CardPanel extends JPanel {
     public Card getCardAtRow(final int row) {
         // return cards.get(row);
         return null;
+    }
+
+    /**
+     * Gets the expected image file name.
+     * 
+     * @return the expected image file name
+     */
+    public String getExpectedImageFileName(final String number) {
+        if (number.endsWith("-1") || number.endsWith("-2")) {
+            return number + Constants.DEFAULT_IMAGE_EXTENSION;
+        }
+
+        if (number.toUpperCase().endsWith("A")) {
+            return number.toUpperCase().replaceAll("A", "-1") + Constants.DEFAULT_IMAGE_EXTENSION;
+        }
+
+        if (number.toUpperCase().endsWith("B")) {
+            return number.toUpperCase().replaceAll("B", "-2") + Constants.DEFAULT_IMAGE_EXTENSION;
+        }
+
+        if (number.endsWith("_1")) {
+            return number.replaceAll("_1", "-1") + Constants.DEFAULT_IMAGE_EXTENSION;
+        }
+
+        if (number.endsWith("_2")) {
+            return number.replaceAll("_2", "-2") + Constants.DEFAULT_IMAGE_EXTENSION;
+        }
+
+        return number + "-1" + Constants.DEFAULT_IMAGE_EXTENSION;
     }
 
     /**
@@ -127,8 +134,7 @@ public class CardPanel extends JPanel {
      *            the card
      */
     public void updatePicture(final Card card) {
-        final String imagesPath = "img" + File.separator + "expansions" + File.separator;
-        final String expectedFileCardName = imagesPath + card.getSetAbbreviation(card.getExpansion()) + File.separator + buildCardFileName(card.getNumber());
+        final String expectedFileCardName = Constants.DEFAULT_IMAGE_PATH + card.getSetAbbreviation(card.getExpansion()) + File.separator + getExpectedImageFileName(card.getNumber());
         if (new File(expectedFileCardName).exists()) {
             final ImageIcon newImage = new ImageIcon(expectedFileCardName, card.getName());
             final int currentHeight = newImage.getIconHeight();
