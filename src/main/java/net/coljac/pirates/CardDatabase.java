@@ -77,22 +77,6 @@ public class CardDatabase implements Serializable {
 
     }
 
-    /**
-     * The main method.
-     * 
-     * @param args
-     *            the arguments
-     */
-    public static void main(final String[] args) {
-        try {
-            final CardDatabase db = CardDatabase.init("blah.dat");
-            db.save();
-        } catch (final IOException e) {
-            e.printStackTrace();
-        }
-
-    }
-
     /** The file name. */
     private String fileName;
 

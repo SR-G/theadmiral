@@ -15,6 +15,9 @@ import javax.swing.JScrollPane;
  */
 public class HelpPanel extends JPanel {
 
+    /** serialVersionUID */
+    private static final long serialVersionUID = 3653990682953723150L;
+
     /**
      * Instantiates a new help panel.
      */

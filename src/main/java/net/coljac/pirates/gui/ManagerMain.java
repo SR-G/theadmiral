@@ -331,7 +331,7 @@ public class ManagerMain extends JFrame {
         });
         minis.add(wants);
 
-        final JMenuItem importCards = new JMenuItem("Import cards");
+        final JMenuItem importCards = new JMenuItem("Import cards definitions");
         importCards.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -449,6 +449,21 @@ public class ManagerMain extends JFrame {
             }
         });
         fileMenu.add(clearOwned);
+
+        fileMenu.addSeparator();
+
+        final JMenuItem stats = new JMenuItem("Statistics");
+        stats.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final JDialog dialog = new JDialog(instance, "Statistics", false);
+                dialog.add(new StatisticsPanel());
+                dialog.setSize(720, 900);
+                dialog.setLocationRelativeTo(ManagerMain.instance);
+                dialog.setVisible(true);
+            }
+        });
+        fileMenu.add(stats);
 
         fileMenu.addSeparator();
 
