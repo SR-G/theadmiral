@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 /**
  * By Colin Jacobs, colin@q9software.com
  * Date: Mar 23, 2006
@@ -140,6 +139,22 @@ public class CardDatabase implements Serializable {
         crew.clear();
         events.clear();
         treasure.clear();
+    }
+
+    public void clearOwnedCards() {
+        clearOwnedCards(cards);
+        clearOwnedCards(ships);
+        clearOwnedCards(crew);
+        clearOwnedCards(events);
+        clearOwnedCards(treasure);
+
+    }
+
+    private void clearOwnedCards(final List<? extends Card> cardsToClear) {
+        for (final Card card : cardsToClear) {
+            card.setOwned(0);
+            card.setWanted(0);
+        }
     }
 
     /**

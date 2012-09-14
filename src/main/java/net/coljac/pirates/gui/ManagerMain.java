@@ -117,6 +117,7 @@ public class ManagerMain extends JFrame {
                 final InputStream is = ManagerMain.class.getResourceAsStream("/data/cards.db");
                 if (is != null) {
                     db = CardDatabase.init(is, cardDB);
+                    db.clearOwnedCards();
                 } else {
                     db = new CardDatabase(cardDB);
                 }
@@ -416,6 +417,8 @@ public class ManagerMain extends JFrame {
 
         importSubMenu.add(importMine);
 
+        fileMenu.addSeparator();
+
         final JMenuItem clear = new JMenuItem("Clear Cards");
         clear.addActionListener(new ActionListener() {
             @Override
@@ -430,6 +433,21 @@ public class ManagerMain extends JFrame {
             }
         });
         fileMenu.add(clear);
+
+        final JMenuItem clearOwned = new JMenuItem("Clear Have and Wants");
+        clearOwned.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final int option = JOptionPane.showConfirmDialog(ManagerMain.instance, "This will remove all \"Have\" and \"Wants\" counters ! Are you sure?", "Clear have and wants counters ?", JOptionPane.YES_NO_OPTION);
+                if (option == JOptionPane.YES_OPTION) {
+                    db.clearOwnedCards();
+                    db.save();
+                    dbChanged();
+                }
+
+            }
+        });
+        fileMenu.add(clearOwned);
 
         fileMenu.addSeparator();
 
