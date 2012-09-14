@@ -76,7 +76,7 @@ public class CardPanel extends JPanel {
             return number.toUpperCase().replaceAll("_2", "-2") + extension;
         }
 
-        return number + extension;
+        return number + "-1" + extension;
     }
 
     //
