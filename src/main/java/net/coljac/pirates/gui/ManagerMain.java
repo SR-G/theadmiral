@@ -182,7 +182,7 @@ public class ManagerMain extends JFrame {
         chooser.setFileFilter(new FileFilter() {
             @Override
             public boolean accept(final File pathname) {
-                return pathname.getAbsolutePath().toUpperCase().endsWith(ext.toUpperCase());
+                return pathname.isDirectory() || pathname.getAbsolutePath().toUpperCase().endsWith(ext.toUpperCase());
             }
 
             @Override
