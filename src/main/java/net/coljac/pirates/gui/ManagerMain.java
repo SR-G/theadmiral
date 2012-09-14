@@ -11,7 +11,8 @@ import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
@@ -163,8 +164,9 @@ public class ManagerMain extends JFrame {
      *            the db2
      */
     private void checkImagesAvailabily() {
-        final Collection<String> notAvailablesImages = ImageHelper.checkImageAvaibility(db);
+        final List<String> notAvailablesImages = ImageHelper.checkImageAvaibility(db);
         if (notAvailablesImages.size() > 0) {
+            Collections.sort(notAvailablesImages);
             System.out.println("Warning, " + notAvailablesImages.size() + " images aren't available");
             for (final String notAvailableImage : notAvailablesImages) {
                 System.out.println(" - " + notAvailableImage);

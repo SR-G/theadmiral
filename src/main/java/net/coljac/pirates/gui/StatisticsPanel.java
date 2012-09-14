@@ -79,12 +79,12 @@ public class StatisticsPanel extends JPanel {
 
         // final Plot plot = Plots.newPlot(Data.newData(0, 66.6, 33.3, 100));
         final AxisStyle axisStyle = AxisStyle.newAxisStyle(BLACK, 14, AxisTextAlignment.RIGHT);
-        final AxisLabels axisValues = AxisLabelsFactory.newNumericRangeAxisLabels(0, max);
+        final AxisLabels axisValues = AxisLabelsFactory.newNumericRangeAxisLabels(0, max + 1);
         axisValues.setAxisStyle(axisStyle);
         final AxisLabels axisLabels = AxisLabelsFactory.newAxisLabels(labels);
         axisLabels.setAxisStyle(axisStyle);
 
-        final BarChartPlot plot = Plots.newBarChartPlot(DataUtil.scaleWithinRange(0, max, values));
+        final BarChartPlot plot = Plots.newBarChartPlot(DataUtil.scaleWithinRange(0, max + 1, values));
         final BarChart chart = GCharts.newBarChart(plot);
         // chart.setTitle("Stats", BLACK, 16);
         // chart.addHorizontalRangeMarker(40, 60, Color.newColor(RED, 30));

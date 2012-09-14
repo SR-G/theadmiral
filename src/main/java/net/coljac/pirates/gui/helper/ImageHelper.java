@@ -2,7 +2,7 @@ package net.coljac.pirates.gui.helper;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 
 import net.coljac.pirates.Card;
 import net.coljac.pirates.CardDatabase;
@@ -20,12 +20,12 @@ final public class ImageHelper {
      *            the db
      * @return the collection
      */
-    public static Collection<String> checkImageAvaibility(final CardDatabase db) {
-        final Collection<String> notAvailablesImages = new ArrayList<String>();
+    public static List<String> checkImageAvaibility(final CardDatabase db) {
+        final List<String> notAvailablesImages = new ArrayList<String>();
         for (final Card card : db.getCards()) {
             final String imageFullPath = getExpectedImageFulPath(card);
             if (!new File(imageFullPath).exists()) {
-                notAvailablesImages.add(imageFullPath);
+                notAvailablesImages.add(imageFullPath + " | " + card.getName());
             }
         }
         return notAvailablesImages;
@@ -38,28 +38,29 @@ final public class ImageHelper {
      *            the number
      * @return the expected image file name
      */
-    public static String getExpectedImageFileName(final String number) {
-        if (number.endsWith("-1") || number.endsWith("-2")) {
+    public static String getExpectedImageFileName(final String n) {
+        final String number = n.toUpperCase();
+        if (number.endsWith("A") || number.endsWith("B")) {
             return number + Constants.DEFAULT_IMAGE_EXTENSION;
         }
 
-        if (number.toUpperCase().endsWith("A")) {
-            return number.toUpperCase().replaceAll("A", "-1") + Constants.DEFAULT_IMAGE_EXTENSION;
-        }
-
-        if (number.toUpperCase().endsWith("B")) {
-            return number.toUpperCase().replaceAll("B", "-2") + Constants.DEFAULT_IMAGE_EXTENSION;
-        }
-
         if (number.endsWith("_1")) {
-            return number.replaceAll("_1", "-1") + Constants.DEFAULT_IMAGE_EXTENSION;
+            return number.replaceAll("_1", "A") + Constants.DEFAULT_IMAGE_EXTENSION;
         }
 
         if (number.endsWith("_2")) {
-            return number.replaceAll("_2", "-2") + Constants.DEFAULT_IMAGE_EXTENSION;
+            return number.replaceAll("_2", "B") + Constants.DEFAULT_IMAGE_EXTENSION;
         }
 
-        return number + "-1" + Constants.DEFAULT_IMAGE_EXTENSION;
+        if (number.endsWith("-1")) {
+            return number.replaceAll("-1", "A") + Constants.DEFAULT_IMAGE_EXTENSION;
+        }
+
+        if (number.endsWith("-2")) {
+            return number.replaceAll("-2", "B") + Constants.DEFAULT_IMAGE_EXTENSION;
+        }
+
+        return number + Constants.DEFAULT_IMAGE_EXTENSION;
     }
 
     /**
