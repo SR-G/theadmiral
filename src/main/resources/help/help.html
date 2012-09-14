@@ -1,0 +1,149 @@
+<html>
+<h2>The Admiral Help</h2>
+
+<hr>
+
+<h3>Basic Usage</h3>
+
+The application lists the cards available for the Pirates game, and lets you compile them into fleets.
+It also lets you record which cards you own, so you can build fleets from your available resources. The application
+isn't, however, a fully-fledged collection manager - it doesn't for instance differentiate between cards of the same
+name
+from different editions of the same set (e.g. PofSM/PofSMU).
+<p>
+  <b>Some conventions:</b><br>
+<ul>
+  <li>The green checkmark icon represents how many copies of this card you own.</li>
+  <li>The red exclamation mark represents how many of this card you want to get.</li>
+  <li>These columns can be incremented and decremented by left or right clicking respectively.</li>
+  <li>When using the search box, hitting enter will apply the filter. Search terms can be separated by commas -
+    for example, "cannot, fort" will find all cards with both words in their names and rules texts, but "english ships"
+    would only find cards with the exact phrase "english ships" on the card.</li>
+  <li>Clicking on a column header sorts by that column. Clicking again reverses the order of the sort. To sort by
+    column A then column B, click B first, then A.</li>
+</ul>
+
+<h3>Ships</h3>
+
+The ships tab lists all the ships in the game. Like other cards, the list can be filtered using the controls above.
+The ship's rules text is visible as a "tool tip" if you hover the mouse over the rules column. If a fleet is open,
+a ship can be added to the fleet by left clicking on its name.
+<p>
+  The application "understands" how long a move distance is, and so can intelligently sort on this column.
+
+<p>
+  <b>Forts</b>
+  <p>
+  Forts are treated as ships in the application. Their gold cost is listed instead of their move, and their
+  rules text is prefaced with "(FORT)".
+
+<h3>Crew</h3>
+The crew tab lists all the crew in the game. Some generic crew is included, some isn't - this is due to
+anomalies in Wizkids own card lists. Generic crew can always be added to a fleet from the fleet tab.
+Like other cards, the list can be filtered using the controls above. The crew's rules text is
+visible as a "tool tip" if you hover the mouse over the rules column. If a fleet is open,
+a crew member can be added to the fleet by left clicking on its name. It can be assigned directly to a ship already
+in the fleet using the popup menu that is displayed.
+
+<h3>Fleets</h3>
+
+The Fleets tab lets you create and manage fleets, that is, lists of cards. To create a new fleet, enter a name
+for the fleet and hit "new". Previously created fleets can be opened or deleted using the buttons provided.
+<p>
+  Things to note:
+<ul>
+  <li>The skull-and-crossbones button deletes a card from the fleet. </li>
+  <li>Crew can be reassigned between ships by dragging and dropping.</li>
+  <li>After the ship's name, a summary of available cargo space and point-value of crew assigned is shown. </li>
+  <li>If the ship is overloaded - with too much cargo or too high a value of crew points, the ship's name will be
+    displayed in red. The application tries to intelligently take into account the abilities of crew (Oarsmen, link
+    data,
+    The Stump, etc) but may not be perfect.</li>
+  <li>If crew of an incorrect nationality are placed on the ship, it's name will be shown in blue. Againl the
+    application tries to take special abilities into consideration.</li>
+</ul>
+The print button will send a simple view of the fleet to your printer. The export fleet button will save the fleet
+to a text file of your choosing.
+
+<h3>Importing/Exporting</h3>
+<p>
+Several options for import and export are provided under the "File" menu.
+<p>
+<b>Export</b><br>
+<ul>
+  <li>Export my cards: Exports in verbose form all the cards you have or want to a tab-delimited text file.</li>
+  <li>Export all cards: Exports in verbose form all cards in the database as text. They could be edited and
+    reimported.</li>
+  <li>Export checklist: Exports the cards you own in a simplified format.</li>
+  <li>Trading: Tries to exports in a format compatible with the site miniaturetrading.com. <ul>
+    <li>Haves: Cards where the have is greater than 1 (i.e. only dupes).</li>
+    <li>Wants: Cards where the want value is greater than 0. </li>
+  </ul></li>
+</ul>
+<b>Import</b>
+<ul>
+  <li>Import cards: Imports a list of cards in the verbose format.</li>
+  <li>Import checklist: Imports cards in the simplified checklist format. This will only update the
+    owned and wanted quantities of existing cards.</li>
+</ul>
+<b>Clear Cards</b>
+
+<p>
+  This deletes all cards in the database. I recommend backing up the file "cards.db" before doing this.
+  This option might be useful if you want to export all the cards, make changes, and import them all again.
+
+<h2>File Formats</h2>
+
+Here's a guide to the file formats used by the application. These should help you customize the cards in the set,
+ and add new cards, sets and factions.
+<h3>Cards</h3>
+A card file contails a list of cards, one per line. Each card is a tab-delimited record, that looks like this:
+<blockquote>
+Ship[tab]78[tab]Asesino de la Nave[tab]0[tab]0[tab]Spanish[tab]Pirates of the Spanish Main[tab]12[tab]Uncommon[tab]When this ship hits an enemy ship, you may also eliminate one cargo from that ship.[tab]The "Ship Killer" is armed with huge bore cannons capable of devastating short-range damage. Capitan Gonzalo Mora first rose to prominence on her deck.[tab]SS-010[tab]3[tab]4[tab]L[tab]2S,2S,2S[tab]
+</blockquote>
+All cards have the following values:
+<ol>
+  <li>Card type (Ship, Fort, Crew, Event or Treasure)</li>
+  <li>Card number</li>
+  <li>Card name</li>
+  <li>Number owned</li>
+  <li>Number wanted</li>
+  <li>Faction (e.g. "American")</li>
+  <li>Expansion (e.g. "Pirates of the South China Seas")</li>
+  <li>Points (e.g. 10)</li>
+  <li>Rarity (e.g. Common, Uncommon, Rare, Super Rare)</li>
+  <li>Rules (card rule text)</li>
+  <li>Flavor (card flavor text)</li>
+  <li>Extra (extra information if needed)</li>
+</ol>
+<p>In addition, some individual card types have extra fields:
+<p><b>Ships</b>
+<ol>
+  <li>Masts (e.g. 4)</li>
+  <li>Cargo (e.g. 6)</li>
+  <li>Move (e.g. "L", "S,L", "S,S")</li>
+  <li>Cannons (e.g. "3S,4S", "2L,2L,2L")</li>
+</ol>
+<p>
+<b>Crew</b>
+<ol>
+  <li>Link (another card name)</li>
+  <li>Rank (for flavor where appropriate)</li>
+</ol>
+<h3>Adding Sets</h3>
+New sets can be added to the program by creating a file called "sets.txt" in the Admiral's
+ program directory. It should contain lines that look like this:
+<blockquote>
+Pirates of the Mysterious Island,PofMI
+</blockquote>
+Where the first value is the name of the set, and the second the abbreviation to use in the app.
+<h3>New Factions</h3>
+New factions can be added as above with a file called "factions.txt". It should look like this:
+<blockquote>
+Mercenary,flag_me_16.png
+</blockquote>
+Where the first token is the name of the Faction, and the second a 16x16 image to use in the interface, also located in the program directory.
+<p>
+<b>Good luck and have fun.  </b>
+
+</html>

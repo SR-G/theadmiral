@@ -1,0 +1,26 @@
+<project name="admiral" default="jar">
+
+	<target name="compile">
+		<javac destdir="./classes" debug="true" srcdir="./src">
+			<exclude name="net/coljac/pirates/data/**/*.java" />
+		</javac>
+		<copy todir="./classes">
+			<fileset dir="./icons" />
+		</copy>
+		<copy todir="./classes" file="./cards.db" />
+		<copy todir="./classes">
+			<fileset dir="./src">
+				<include name="*.txt" />
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar basedir="./classes" destfile="admiral.jar">
+			<manifest>
+				<attribute name="Main-Class" value="net.coljac.pirates.gui.ManagerMain" />
+			</manifest>
+		</jar>
+
+	</target>
+</project>

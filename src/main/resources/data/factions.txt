@@ -1,0 +1,12 @@
+# name,small_icon
+Pirates,/icons/flag_pr_16.png
+Spanish,/icons/flag_es_16.png
+French,/icons/flag_fr_16.png
+English,/icons/flag_en_16.png
+Barbary Corsair,/icons/flag_bc_16.png
+Jade Rebellion,/icons/flag_jr_16.png
+American,/icons/flag_us_16.png
+The Cursed,/icons/flag_cu_16.png
+Mercenary,/icons/flag_me_16.png
+Vikings,/icons/flag_vk_16.png
+North Pole,/icons/flag_np_16.png

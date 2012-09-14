@@ -1,0 +1,13 @@
+Pirates of the Spanish Main,PofSM
+Pirates of the Crimson Coast,PofCC
+Pirates of the Revolution,PofR
+Pirates of the Barbary Coast,PofBC
+Pirates of the South China Seas,PofSCS
+Pirates of Davy Jones Curse,PofDJC
+Pirates of the Mysterious Island,PofMI
+Pirates of the Frozen North,PofFN
+Pirates at Ocean's Edge,PatOE
+Pirates of the Caribbean,PotC
+Pirates Rise of the Fiends,RotF
+Pirates Fire and Steel,F&S
+Pirates Savage Shores,S.S.
