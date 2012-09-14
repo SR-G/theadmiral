@@ -2,7 +2,7 @@
 
 The Admiral is a program to manage a database of cards for the game [Pirates of the Spanish Main](en.wikipedia.org/wiki/Pirates_of_the_Spanish_Main). If you don't know what this is, you probably don't want to be here. It's a fun game, though - check it out.
 
-![screenshot](screenshot.png)
+![screenshot](https://github.com/SR-G/theadmiral/blob/master/screenshot.png?raw=true)
 
 # Download
 
