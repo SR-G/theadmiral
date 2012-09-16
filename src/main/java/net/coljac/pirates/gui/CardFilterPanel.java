@@ -51,7 +51,7 @@ public class CardFilterPanel extends JPanel implements ActionListener {
     private JCheckBox pt1_5, pt6_10, pt11_15, pt_16;
 
     /** The want. */
-    private JCheckBox have, want;
+    private JCheckBox have, want, duplicates;
 
     /** The search field. */
     private JTextField searchField;
@@ -163,6 +163,8 @@ public class CardFilterPanel extends JPanel implements ActionListener {
             filter.setHave(have.isSelected());
         } else if (src == want) {
             filter.setWant(want.isSelected());
+        } else if (src == duplicates) {
+            filter.setDuplicates(duplicates.isSelected());
         }
 
         if (listener != null) {
@@ -303,12 +305,16 @@ public class CardFilterPanel extends JPanel implements ActionListener {
     private void initOwnedFilters(final JPanel p) {
         ownedLabel = new JLabel("Owned :");
         have = new JCheckBox("Have");
+        duplicates = new JCheckBox("Duplicates");
+        duplicates.setToolTipText("Cards owned more than 1 times");
         want = new JCheckBox("Want");
         have.addActionListener(this);
+        duplicates.addActionListener(this);
         want.addActionListener(this);
 
         final JPanel temp = getPanel();
-        temp.add(have, "h 15!, wrap");
+        temp.add(have, "h 15!");
+        temp.add(duplicates, "h 15!, wrap");
         temp.add(want, "h 15!");
         p.add(ownedLabel);
         p.add(temp, "");

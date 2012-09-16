@@ -32,6 +32,9 @@ public class CardFilter {
     /** The want. */
     boolean want = false;
 
+    /** The want. */
+    boolean duplicates = false;
+
     /**
      * Filter.
      * 
@@ -40,14 +43,17 @@ public class CardFilter {
      * @return the list<? extends card>
      */
     public List<? extends Card> filter(final List<? extends Card> cards) {
-        if ((factions.size() == 0) && (sets.size() == 0) && (pointRanges.size() == 0) && (search.length == 0) && !have && !want) {
+        if ((factions.size() == 0) && (sets.size() == 0) && (pointRanges.size() == 0) && (search.length == 0) && !have && !want && !duplicates) {
             return cards;
         }
 
         final List<Card> filtered = new ArrayList<Card>();
         for (final Card card : cards) {
-            if (want || have) {
+            if (want || have || duplicates) {
                 if (want && (card.getWanted() == 0)) {
+                    continue;
+                }
+                if (duplicates && (card.getOwned() <= 1)) {
                     continue;
                 }
                 if (have && (card.getOwned() == 0)) {
@@ -125,6 +131,15 @@ public class CardFilter {
     }
 
     /**
+     * Checks if is duplicates.
+     * 
+     * @return true, if is duplicates
+     */
+    public boolean isDuplicates() {
+        return duplicates;
+    }
+
+    /**
      * Checks if is have.
      * 
      * @return true, if is have
@@ -140,6 +155,16 @@ public class CardFilter {
      */
     public boolean isWant() {
         return want;
+    }
+
+    /**
+     * Sets the duplicates.
+     * 
+     * @param duplicates
+     *            the new duplicates
+     */
+    public void setDuplicates(final boolean duplicates) {
+        this.duplicates = duplicates;
     }
 
     /**

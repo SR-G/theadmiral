@@ -10,7 +10,7 @@
 
 	<groupId>org.tensin.admiral</groupId>
 	<artifactId>admiral</artifactId>
-	<version>1.4.0-SNAPSHOT</version>
+	<version>1.4.1-SNAPSHOT</version>
 
 	<description>The Admiral</description>
 	<name>admiral</name>
