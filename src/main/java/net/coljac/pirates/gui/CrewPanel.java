@@ -282,6 +282,7 @@ public class CrewPanel extends CardPanel {
                     ManagerMain.instance.allPanel.cards.removeAll(toDelete);
                     ManagerMain.instance.allPanel.allCards.removeAll(toDelete);
                     ManagerMain.instance.db.getCrew().removeAll(toDelete);
+                    ManagerMain.instance.db.setModified(true);
 
                     new Thread() {
                         @Override

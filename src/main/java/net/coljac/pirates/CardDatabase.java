@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -77,6 +79,9 @@ public class CardDatabase implements Serializable {
 
     }
 
+    /** The modified. */
+    private boolean modified = false;
+
     /** The file name. */
     private String fileName;
 
@@ -135,6 +140,7 @@ public class CardDatabase implements Serializable {
         clearOwnedCards(crew);
         clearOwnedCards(events);
         clearOwnedCards(treasure);
+        modified = true;
     }
 
     /**
@@ -148,6 +154,7 @@ public class CardDatabase implements Serializable {
             card.setOwned(0);
             card.setWanted(0);
         }
+        modified = true;
     }
 
     /**
@@ -246,6 +253,10 @@ public class CardDatabase implements Serializable {
         return treasure;
     }
 
+    public boolean isModified() {
+        return modified;
+    }
+
     /**
      * Save.
      */
@@ -268,6 +279,7 @@ public class CardDatabase implements Serializable {
      */
     public void setCards(final List<Card> cards) {
         this.cards = cards;
+        modified = true;
     }
 
     /**
@@ -278,6 +290,7 @@ public class CardDatabase implements Serializable {
      */
     public void setCrew(final List<Crew> crew) {
         this.crew = crew;
+        modified = true;
     }
 
     /**
@@ -288,6 +301,7 @@ public class CardDatabase implements Serializable {
      */
     public void setEvents(final List<Event> events) {
         this.events = events;
+        modified = true;
     }
 
     /**
@@ -308,6 +322,17 @@ public class CardDatabase implements Serializable {
      */
     public void setFleets(final List<Fleet> fleets) {
         this.fleets = fleets;
+        modified = true;
+    }
+
+    /**
+     * Sets the modified.
+     * 
+     * @param modified
+     *            the new modified
+     */
+    public void setModified(final boolean modified) {
+        this.modified = modified;
     }
 
     /**
@@ -318,6 +343,7 @@ public class CardDatabase implements Serializable {
      */
     public void setShips(final List<Ship> ships) {
         this.ships = ships;
+        modified = true;
     }
 
     /**
@@ -328,6 +354,16 @@ public class CardDatabase implements Serializable {
      */
     public void setTreasure(final List<Card> treasure) {
         this.treasure = treasure;
+        modified = true;
     }
 
+    /**
+     * Sort.
+     * 
+     * @param comparator
+     *            the comparator
+     */
+    public void sort(final Comparator<Card> comparator) {
+        Collections.sort(cards, comparator);
+    }
 }

@@ -1,8 +1,12 @@
 package net.coljac.pirates.gui.helper;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 
 import net.coljac.pirates.Card;
 import net.coljac.pirates.CardDatabase;
@@ -10,13 +14,43 @@ import net.coljac.pirates.Crew;
 import net.coljac.pirates.Fleet;
 import net.coljac.pirates.Ship;
 import net.coljac.pirates.ShipsCrew;
+import net.coljac.pirates.gui.Constants;
+import net.coljac.pirates.gui.ExporterVelocity;
 import net.coljac.pirates.gui.ManagerMain;
+
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.builder.CompareToBuilder;
 
 /**
  * By Colin Jacobs, colin@q9software.com
  * Date: Mar 29, 2006
  */
 public class Exporter {
+
+    private static final class ExporterComparator implements Comparator<Card> {
+
+        @Override
+        public int compare(final Card o1, final Card o2) {
+            return new CompareToBuilder().append(o1.getExpansion(), o2.getExpansion()).append(o1.getNumber(), o2.getNumber()).toComparison();
+        }
+    }
+
+    /**
+     * Export card image.
+     * 
+     * @param destinationPath
+     *            the destination path
+     * @param card
+     *            the card
+     * @throws IOException
+     */
+    private static void exportCardImage(final File destinationPath, final Card card) throws IOException {
+        final String sourceImage = ImageHelper.getExpectedImageFulPath(card);
+        final File fileSourceImage = new File(sourceImage);
+        if (fileSourceImage.exists()) {
+            FileUtils.copyFile(fileSourceImage, new File(destinationPath + File.separator + Card.getSetAbbreviation(card.getExpansion()) + "-" + card.getNumber() + Constants.DEFAULT_IMAGE_EXTENSION));
+        }
+    }
 
     /**
      * Export card list.
@@ -169,6 +203,53 @@ public class Exporter {
     }
 
     /**
+     * Export mt as html.
+     * 
+     * @param fileName
+     *            the file name
+     * @param comment
+     *            the comment
+     * @param haves
+     *            the haves
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     */
+    public static void exportMTAsHTML(final CardDatabase db, final String fileName, final String comment, final boolean haves) throws IOException {
+        db.sort(new ExporterComparator());
+        final File destinationPath = new File(fileName).getParentFile();
+        final PrintWriter pw = new PrintWriter(new FileWriter(fileName));
+        try {
+            final HTMLExporterHelper htmlExporter = new HTMLExporterHelper();
+            final ExporterVelocity exporterVelocityCard = new ExporterVelocity("template-export-duplicates-card.velocity");
+            final ExporterVelocity exporterVelocityMain = new ExporterVelocity("template-export-duplicates-main.velocity");
+            final StringBuilder table = new StringBuilder();
+            int total = 0, count = 0;
+            for (final Object element : db.getCards()) {
+                final Card card = (Card) element;
+                if (haves) {
+                    if (card.getOwned() > 1) {
+                        table.append(renderCardTemplate(exporterVelocityCard, card));
+                        exportCardImage(destinationPath, card);
+                        count++;
+                        total += (card.getOwned() - 1);
+                    }
+                } else if (card.getWanted() > 0) {
+                    table.append(renderCardTemplate(exporterVelocityCard, card));
+                    exportCardImage(destinationPath, card);
+                }
+            }
+            exporterVelocityMain.addContext("duplicates", table);
+            exporterVelocityMain.addContext("date", new SimpleDateFormat().format(new Date()));
+            exporterVelocityMain.addContext("duplicates-total", total);
+            exporterVelocityMain.addContext("duplicates-count", count);
+            pw.write(exporterVelocityMain.render());
+        } finally {
+            pw.flush();
+            pw.close();
+        }
+    }
+
+    /**
      * Gets the prefix.
      * 
      * @param set
@@ -208,6 +289,40 @@ public class Exporter {
     private static String points(final Card c) {
         final int points = c.getPoints();
         return points >= 10 ? (new StringBuilder()).append(points).toString() : (new StringBuilder(" ")).append(points).toString();
+    }
+
+    /**
+     * Render card template.
+     * 
+     * @param exporterVelocityCard
+     *            the exporter velocity card
+     * @param card
+     *            the card
+     * @return the string
+     */
+    private static String renderCardTemplate(final ExporterVelocity exporterVelocityCard, final Card card) {
+        exporterVelocityCard.clearContext();
+        exporterVelocityCard.addContext("card", card);
+        exporterVelocityCard.addContext("number", String.valueOf((card.getOwned() - 1)));
+        exporterVelocityCard.addContext("image", Card.getSetAbbreviation(card.getExpansion()) + "-" + card.getNumber() + Constants.DEFAULT_IMAGE_EXTENSION);
+        return exporterVelocityCard.render();
+
+        // /**
+        // * To html.
+        // *
+        // * @return the string
+        // */
+        // public String toHTML() {
+        // final StringBuilder sb = new StringBuilder();
+        // final String imgPath = getSetAbbreviation(getExpansion()) + "-" + getNumber() + Constants.DEFAULT_IMAGE_EXTENSION;
+        // sb.append("<tr>");
+        // sb.append("<td class=\"count\">" + (getOwned() - 1) + "</td>");
+        // sb.append("<td><img width=\"200\" src=\"" + imgPath + "\" /></td>");
+        // sb.append("</tr>");
+        // return sb.toString();
+        // }
+        //
+
     }
 
     /**

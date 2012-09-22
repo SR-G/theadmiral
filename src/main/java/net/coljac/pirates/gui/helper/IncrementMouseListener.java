@@ -69,6 +69,7 @@ public class IncrementMouseListener extends MouseAdapter {
                 ManagerMain.instance.db.save();
             }
         }.start();
+        ManagerMain.instance.db.setModified(true);
         model.fireTableRowsUpdated(row, row);
     }
 

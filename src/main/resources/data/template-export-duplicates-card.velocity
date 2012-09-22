@@ -1,0 +1,8 @@
+<tr>
+	<td class="count" rowspan="5" width="130">${number}</td>
+	<td class="image" rowspan="5" width="130"><img src="${image}" width="130" /></td>
+</tr>	
+<tr><td class="label">Name :</td><td class="value name">#${card.number} - ${card.name}</td></tr>
+<tr><td class="label">Extension :</td><td class="value">${card.expansion}</td></tr>
+<tr><td class="label">Faction :</td><td class="value">${card.faction}</td></tr>
+<tr><td class="label">Rareté :</td><td class="value">${card.rarity}</td></tr>

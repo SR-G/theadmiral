@@ -323,7 +323,7 @@ public class ManagerMain extends JFrame {
         final JMenu minis = new JMenu("Trading");
         exportSubMenu.add(minis);
 
-        final JMenuItem haves = new JMenuItem("Haves");
+        final JMenuItem haves = new JMenuItem("Haves (txt)");
         haves.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
@@ -331,11 +331,25 @@ public class ManagerMain extends JFrame {
                 try {
                     Exporter.exportMT(file, getCommentString(), true);
                 } catch (final IOException ioe) {
-                    showError("Problem with the export: " + ioe.getMessage());
+                    showError("Problem while exporting to file [" + file + "] : " + ioe.getMessage());
                 }
             }
         });
         minis.add(haves);
+
+        final JMenuItem havesHTML = new JMenuItem("Haves (HTML)");
+        havesHTML.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                final String file = getFile("html", true);
+                try {
+                    Exporter.exportMTAsHTML(ManagerMain.instance.db, file, getCommentString(), true);
+                } catch (final IOException ioe) {
+                    showError("Problem while exporting to file [" + file + "] : " + ioe.getMessage());
+                }
+            }
+        });
+        minis.add(havesHTML);
 
         final JMenuItem wants = new JMenuItem("Wants");
         wants.addActionListener(new ActionListener() {
@@ -345,7 +359,7 @@ public class ManagerMain extends JFrame {
                 try {
                     Exporter.exportMT(file, getCommentString(), false);
                 } catch (final IOException ioe) {
-                    showError("Problem with the export: " + ioe.getMessage());
+                    showError("Problem while exporting to file [" + file + "] : " + ioe.getMessage());
                 }
             }
         });
