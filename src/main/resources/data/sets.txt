@@ -1,4 +1,5 @@
 Pirates of the Spanish Main,PofSM
+Pirates of the Spanish Main (unlimited),PofSMU
 Pirates of the Crimson Coast,PofCC
 Pirates of the Revolution,PofR
 Pirates of the Barbary Coast,PofBC
