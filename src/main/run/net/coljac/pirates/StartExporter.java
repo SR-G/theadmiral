@@ -17,7 +17,9 @@ public class StartExporter {
      */
     public static void main(final String[] args) throws Exception {
         final CardDatabase db = CardDatabase.init("cards.db");
-        Exporter.exportMTAsHTML(db, "target/test.html", "ZZZZZZZZZZZZZZZZ", true);
+        final StringBuilder comment = new StringBuilder();
+        comment.append("Contact : Killing Joke sur <a href=\"http://trictrac.net/jeux/forum/privmsg.php?mode=post&u=4870\" target=\"_blank\">Tric Trac</a><br />");
+        Exporter.exportMTAsHTML(db, "target/test.html", comment.toString(), true);
     }
 
 }

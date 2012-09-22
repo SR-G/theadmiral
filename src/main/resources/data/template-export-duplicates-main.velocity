@@ -21,17 +21,33 @@
   td.name {
     font-weight: bold;
   }  
-  
+  td.expansion {
+    font-size: 150%;
+    font-weight: bold;
+   	margin-left: auto;
+   	margin-right: auto;
+   	vertical-align: middle;
+   	text-align: center;
+   	background: #000;
+   	color: white;
+   	font-family : Arial, Helvetica, sans-serif;
+  }
   </style>
 </head>
 <body>
 <center>
 Page générée par <a href="http://potsm.tensin.org/" target="_blank">The Admiral</a> le ${date}<br />
 Nombre de cartes en double au total = ${duplicates-total} | Nombre de différentes cartes en double = ${duplicates-count}<br />
-Contact : Killing Joke sur <a href="http://trictrac.net/jeux/forum/privmsg.php?mode=post&u=4870" target="_blank">Tric Trac</a><br />
+${comment}
 <br />
-<table cellpadding="5">
-${duplicates}
+<table cellpadding="5" border="0">
+#foreach( $expansion in $duplicates.keySet() )
+	<tr><td class="expansion">${expansion}</td></tr>
+	<tr><td><table border="0">
+    	$duplicates.get($expansion)
+    </table><br /></td>
+    </tr>
+#end
 </table>
 </center>
 </body>

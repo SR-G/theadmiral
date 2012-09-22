@@ -7,10 +7,14 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.coljac.pirates.Card;
 import net.coljac.pirates.CardDatabase;
 import net.coljac.pirates.Crew;
+import net.coljac.pirates.Expansion;
+import net.coljac.pirates.Expansions;
 import net.coljac.pirates.Fleet;
 import net.coljac.pirates.Ship;
 import net.coljac.pirates.ShipsCrew;
@@ -19,6 +23,7 @@ import net.coljac.pirates.gui.ExporterVelocity;
 import net.coljac.pirates.gui.ManagerMain;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.CompareToBuilder;
 
 /**
@@ -219,26 +224,34 @@ public class Exporter {
         final File destinationPath = new File(fileName).getParentFile();
         final PrintWriter pw = new PrintWriter(new FileWriter(fileName));
         try {
-            final HTMLExporterHelper htmlExporter = new HTMLExporterHelper();
             final ExporterVelocity exporterVelocityCard = new ExporterVelocity("template-export-duplicates-card.velocity");
             final ExporterVelocity exporterVelocityMain = new ExporterVelocity("template-export-duplicates-main.velocity");
-            final StringBuilder table = new StringBuilder();
+            final Map<String, String> duplicates = new HashMap<String, String>();
             int total = 0, count = 0;
-            for (final Object element : db.getCards()) {
-                final Card card = (Card) element;
-                if (haves) {
-                    if (card.getOwned() > 1) {
+            for (final Expansion expansion : Expansions.getSets()) {
+                final StringBuilder table = new StringBuilder();
+                for (final Object element : db.getCards()) {
+                    final Card card = (Card) element;
+                    if (haves) {
+                        if ((card.getOwned() > 1) && card.getExpansion().equalsIgnoreCase(expansion.getName())) {
+                            table.append(renderCardTemplate(exporterVelocityCard, card));
+                            exportCardImage(destinationPath, card);
+                            count++;
+                            total += (card.getOwned() - 1);
+                        }
+                    } else if ((card.getWanted() > 0) && card.getExpansion().equalsIgnoreCase(expansion.getName())) {
                         table.append(renderCardTemplate(exporterVelocityCard, card));
                         exportCardImage(destinationPath, card);
                         count++;
-                        total += (card.getOwned() - 1);
+                        total += (card.getWanted());
                     }
-                } else if (card.getWanted() > 0) {
-                    table.append(renderCardTemplate(exporterVelocityCard, card));
-                    exportCardImage(destinationPath, card);
+                }
+                if (StringUtils.isNotEmpty(table.toString())) {
+                    duplicates.put(expansion.getName(), table.toString());
                 }
             }
-            exporterVelocityMain.addContext("duplicates", table);
+            exporterVelocityMain.addContext("duplicates", duplicates);
+            exporterVelocityMain.addContext("comment", comment);
             exporterVelocityMain.addContext("date", new SimpleDateFormat().format(new Date()));
             exporterVelocityMain.addContext("duplicates-total", total);
             exporterVelocityMain.addContext("duplicates-count", count);
