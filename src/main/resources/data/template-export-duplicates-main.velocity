@@ -4,6 +4,9 @@
   <style type="text/css">
   body {
   }
+  td {
+  	vertical-align: middle;
+  }
   td.count {
     font-size: 400%;
     font-weight: bold;
@@ -20,6 +23,7 @@
   }
   td.name {
     font-weight: bold;
+    font-size: 120%;
   }  
   td.expansion {
     font-size: 150%;
@@ -32,6 +36,19 @@
    	color: white;
    	font-family : Arial, Helvetica, sans-serif;
   }
+  td.Common {
+    background: #d00;
+  }
+  td.Uncommon {
+    background: #999;
+  }
+  td.Rare, td.Treasure {
+    background: #efef00;
+  }
+  td.Mega Pack (Special Edition) {
+    background: #0e0;
+  }
+  
   </style>
 </head>
 <body>
@@ -42,11 +59,8 @@ ${comment}
 <br />
 <table cellpadding="5" border="0">
 #foreach( $expansion in $duplicates.keySet() )
-	<tr><td class="expansion">${expansion}</td></tr>
-	<tr><td><table border="0">
-    	$duplicates.get($expansion)
-    </table><br /></td>
-    </tr>
+	<tr><td colspan="7" class="expansion">${expansion}</td></tr>
+ 	$duplicates.get($expansion)
 #end
 </table>
 </center>

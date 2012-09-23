@@ -1,8 +1,6 @@
 <tr>
-	<td class="count" rowspan="5" width="110">${number}</td>
-	<td class="image" rowspan="5" width="110"><img src="${image}" width="110" /></td>
-</tr>	
-<tr><td class="label">Name :</td><td class="value name">#${card.number} - ${card.name}</td></tr>
-<tr><td class="label">Faction :</td><td class="value">${card.faction}</td></tr>
-<tr><td class="label">Rareté :</td><td class="value">${card.rarity}</td></tr>
-<tr><td class="label"></td><td class="value"></td></tr>
+	<td class="count" width="110">${number}</td>
+	<td class="count">x</td>
+	<td class="count">&nbsp;#${card.number}&nbsp;</td>
+	<td class="image" width="110"><img src="${image}" width="110" /></td>
+<td class="value ${card.rarity}" style="text-align: center;">${card.rarity}</td><td class="value name">${card.name}</td><td class="value ${card.faction}">${card.faction}</td>
