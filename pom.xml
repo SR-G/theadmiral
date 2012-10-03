@@ -3,11 +3,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<properties>
-		<sourceEncoding>UTF-8</sourceEncoding>
-		<jetty.version>7.2.1.v20101111</jetty.version>
-	</properties>
-
 	<groupId>org.tensin.admiral</groupId>
 	<artifactId>admiral</artifactId>
 	<version>1.4.1-SNAPSHOT</version>
@@ -15,6 +10,13 @@
 	<description>The Admiral</description>
 	<name>admiral</name>
 	<packaging>jar</packaging>
+
+	<properties>
+		<sourceEncoding>UTF-8</sourceEncoding>
+        <version.jetty>7.6.4.v20120524</version.jetty>
+		<version.junit>4.10</version.junit>
+		<version.log4j>1.2.17</version.log4j>
+	</properties>
 
 	<build>
 		<sourceDirectory>src/main/java</sourceDirectory>
@@ -157,7 +159,7 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.10</version>
+			<version>${version.junit}</version>
 			<scope>test</scope>
 			<optional>true</optional>
 		</dependency>
@@ -171,7 +173,7 @@
 		<dependency>
 			<groupId>log4j</groupId>
 			<artifactId>log4j</artifactId>
-			<version>1.2.17</version>
+			<version>${version.log4j}</version>
 			<scope>test</scope>
 			<optional>true</optional>
 		</dependency>
