@@ -51,7 +51,7 @@ public class CardFilterPanel extends JPanel implements ActionListener {
     private JCheckBox pt1_5, pt6_10, pt11_15, pt_16;
 
     /** The want. */
-    private JCheckBox have, want, duplicates;
+    private JCheckBox have, donthave, want, duplicates;
 
     /** The search field. */
     private JTextField searchField;
@@ -161,6 +161,8 @@ public class CardFilterPanel extends JPanel implements ActionListener {
             }
         } else if (src == have) {
             filter.setHave(have.isSelected());
+        } else if (src == donthave) {
+            filter.setDonthave(donthave.isSelected());
         } else if (src == want) {
             filter.setWant(want.isSelected());
         } else if (src == duplicates) {
@@ -211,16 +213,17 @@ public class CardFilterPanel extends JPanel implements ActionListener {
         }
         final JPanel temp = getPanel();
         int cnt = 0;
-
-        final int nbExpansionsByRows = Math.round(expansionsList.size() / 4);
+        final int nbExpansionsByRows = Math.round(expansionsList.size() / 3);
+        System.out.println(">>>>>>>>>>>>>>" + nbExpansionsByRows);
         for (final JCheckBox check : expansionsList) {
             temp.add(check);
-            if ((cnt > 0) && ((cnt + 1) < expansionsList.size()) && ((cnt % nbExpansionsByRows) == 0)) {
+            System.out.println("  " + check.getText());
+            cnt++;
+            if ((cnt > 0) && ((cnt % nbExpansionsByRows) == 0)) {
                 temp.add(check, "h 14!, wrap");
             } else {
                 temp.add(check, "h 14!");
             }
-            cnt++;
 
         }
         temp.setPreferredSize(preferred);
@@ -305,17 +308,22 @@ public class CardFilterPanel extends JPanel implements ActionListener {
     private void initOwnedFilters(final JPanel p) {
         ownedLabel = new JLabel("Owned :");
         have = new JCheckBox("Have");
+        have.setToolTipText("Cards owned");
+        donthave = new JCheckBox("Don't have");
         duplicates = new JCheckBox("Duplicates");
         duplicates.setToolTipText("Cards owned more than 1 times");
         want = new JCheckBox("Want");
         have.addActionListener(this);
+        donthave.addActionListener(this);
+        donthave.setToolTipText("Cards not owned");
         duplicates.addActionListener(this);
         want.addActionListener(this);
 
         final JPanel temp = getPanel();
         temp.add(have, "h 15!");
-        temp.add(duplicates, "h 15!, wrap");
+        temp.add(donthave, "h 15!, wrap");
         temp.add(want, "h 15!");
+        temp.add(duplicates, "h 15!, wrap");
         p.add(ownedLabel);
         p.add(temp, "");
     }

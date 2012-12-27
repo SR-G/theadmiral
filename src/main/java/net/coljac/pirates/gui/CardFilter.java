@@ -29,6 +29,9 @@ public class CardFilter {
     /** The have. */
     boolean have = false;
 
+    /** The donthave. */
+    boolean donthave = false;
+
     /** The want. */
     boolean want = false;
 
@@ -43,13 +46,13 @@ public class CardFilter {
      * @return the list<? extends card>
      */
     public List<? extends Card> filter(final List<? extends Card> cards) {
-        if ((factions.size() == 0) && (sets.size() == 0) && (pointRanges.size() == 0) && (search.length == 0) && !have && !want && !duplicates) {
+        if ((factions.size() == 0) && (sets.size() == 0) && (pointRanges.size() == 0) && (search.length == 0) && !have && !donthave && !want && !duplicates) {
             return cards;
         }
 
         final List<Card> filtered = new ArrayList<Card>();
         for (final Card card : cards) {
-            if (want || have || duplicates) {
+            if (want || have || donthave || duplicates) {
                 if (want && (card.getWanted() == 0)) {
                     continue;
                 }
@@ -57,6 +60,9 @@ public class CardFilter {
                     continue;
                 }
                 if (have && (card.getOwned() == 0)) {
+                    continue;
+                }
+                if (donthave && (card.getOwned() > 0)) {
                     continue;
                 }
             }
@@ -131,6 +137,15 @@ public class CardFilter {
     }
 
     /**
+     * Checks if is donthave.
+     * 
+     * @return true, if is donthave
+     */
+    public boolean isDonthave() {
+        return donthave;
+    }
+
+    /**
      * Checks if is duplicates.
      * 
      * @return true, if is duplicates
@@ -155,6 +170,16 @@ public class CardFilter {
      */
     public boolean isWant() {
         return want;
+    }
+
+    /**
+     * Sets the donthave.
+     * 
+     * @param donthave
+     *            the new donthave
+     */
+    public void setDonthave(final boolean donthave) {
+        this.donthave = donthave;
     }
 
     /**
